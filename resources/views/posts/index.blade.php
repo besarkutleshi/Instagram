@@ -32,14 +32,20 @@
                                 </div>
                                 <hr>
                             @endif
-                            @if($post->comments->count() != 0)
-                                @foreach($post->comments()->get() as $comment)
-                                    <div class="d-flex align-items-center mb-2">
-                                        <img src="{{$comment->user->profile->profileimage()}}" class="rounded-circle"
-                                             width="40" height="40" >
-                                        <p class="mt-3 ml-2">{{$comment->comment}}</p>
-                                    </div>
-                                    <hr>
+                                @if($post->comments->count() != 0)
+                                    @foreach($post->comments()->latest()->get() as $comment)
+                                        @if($counter <= 2)
+                                            <div class="d-flex align-items-center">
+                                                <img src="{{$comment->user->profile->profileimage()}}" class="rounded-circle"
+                                                     width="40" height="40" >
+                                                <p class="mt-3 ml-2">{{$comment->comment}}</p>
+                                            </div>
+                                            <input type="hidden" value="{{$counter++}}">
+                                        @else
+                                            <div class="mt-1">
+                                                <a href="">Show more</a>
+                                            </div>
+                                        @endif
                                     @endforeach
                                 @endif
 

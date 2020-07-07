@@ -18,10 +18,10 @@ class PostController extends Controller
     public function index(){
         $user = auth()->user()->following()->pluck('profiles.user_id');
         $posts = Post::whereIn('user_id',$user)->with('user')->latest()->get();
+        $counter = 0;
 
 
-
-        return view('posts.index',compact('posts'));
+        return view('posts.index',compact('posts','counter'));
     }
 
 
