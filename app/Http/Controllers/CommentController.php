@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
@@ -21,12 +22,22 @@ class CommentController extends Controller
         ]);
 
 
-        Comment::create([
+        return Comment::create([
            'user_id' => $data['user_id'],
            'post_id' => $data['post_id'],
            'comment' => $data['comment'],
         ]);
 
-        return response()->json([$request->all()]);
+
     }
+
+    public function destroy(Comment $comment){
+
+        if($comment->user->id == auth()->user()->id || $comment->post->user->id == auth()->user()->id){
+            DB::table('comments')->where('id', '=', $comment->id)->delete();
+            return redirect("/p/{$comment->post->id}");
+        }
+
+    }
+
 }

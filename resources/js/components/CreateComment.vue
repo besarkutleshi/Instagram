@@ -31,6 +31,7 @@
                     maindiv.className = "card-body";
                     maindiv.style.marginTop = "-30px";
                 }else{
+                    console.log('u eee');
                     maindiv = document.getElementById('commentcard');
                 }
                 console.log('dul');
@@ -41,6 +42,7 @@
                 })
                     .then(response =>
                     {
+
                        let firstdiv = document.createElement("div");
                         firstdiv.className = "d-flex align-items-center";
 
@@ -62,9 +64,20 @@
                         p.textContent = this.comment;
                         p.className = "mt-3 ml-2";
 
+                        let a1 = document.createElement('a');
+                        a1.href = "/c/delete/" + response.data.id;
+
+                        let span = document.createElement('span');
+                        span.className = "fa fa-trash ml-2";
+                        a1.appendChild(span);
+
+
+
+
                         firstdiv.appendChild(img);
                         firstdiv.appendChild(a);
                         firstdiv.appendChild(p);
+                        firstdiv.appendChild(a1);
 
                         maindiv.appendChild(firstdiv);
                         card.appendChild(maindiv);

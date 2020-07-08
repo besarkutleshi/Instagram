@@ -1941,6 +1941,7 @@ __webpack_require__.r(__webpack_exports__);
         maindiv.className = "card-body";
         maindiv.style.marginTop = "-30px";
       } else {
+        console.log('u eee');
         maindiv = document.getElementById('commentcard');
       }
 
@@ -1966,9 +1967,15 @@ __webpack_require__.r(__webpack_exports__);
         var p = document.createElement('p');
         p.textContent = _this.comment;
         p.className = "mt-3 ml-2";
+        var a1 = document.createElement('a');
+        a1.href = "/c/delete/" + response.data.id;
+        var span = document.createElement('span');
+        span.className = "fa fa-trash ml-2";
+        a1.appendChild(span);
         firstdiv.appendChild(img);
         firstdiv.appendChild(a);
         firstdiv.appendChild(p);
+        firstdiv.appendChild(a1);
         maindiv.appendChild(firstdiv);
         card.appendChild(maindiv);
         document.getElementById('txtcomment').textContent = null;

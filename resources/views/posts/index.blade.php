@@ -7,14 +7,14 @@
                 <div class="col-8">
                     <div class="card">
                         <div class="card-header bg-white">
-                            <div class="d-flex">
+                            <div class="d-flex align-items-baseline">
                                 <a class="text-dark" style="text-decoration: none;" href="/profile/{{$post->user->id}}}">
                                     <div>
                                         <img src="{{$post->user->profile->profileimage()}}" class="rounded-circle" style="width: 40px" height="40" alt="">
                                     </div>
                                 </a>
                                 <div class="pl-2 pt-3">
-                                    <h6>{{$post->user->username}}</h6>
+                                    <a class="text-dark" href="/profile/{{$post->user->id}}"><h6>{{$post->user->username}}</h6></a>
                                 </div>
                             </div>
                         </div>
@@ -28,7 +28,7 @@
                         </div>
                         @if($post->caption)
                             <div class="d-flex align-items-baseline" style="margin-top: -10px">
-                                <p>{{$post->user->username}}</p>
+                                <a class="text-dark" href="/profile/{{$post->user->id}}"><p>{{$post->user->username}}</p></a>
                                 <h6 class="ml-2" style="margin-top: 0px" >{{$post->caption}}</h6>
                             </div>
                             <hr style="margin-top: -10px">
@@ -46,12 +46,13 @@
                                             </div>
                                             <input type="hidden" value="{{$counter++}}">
                                         </div>
-                                    @else
+                                    @endif
+                                @endforeach
+                                @if($counter >= 3)
                                         <div class="mt-1">
                                             <a href="">Show more</a>
                                         </div>
                                     @endif
-                                @endforeach
                             @endif
                         </div>
                         <create-comment exist="{{$post->comments->count()}}" userid="{{auth()->user()->id}}" postid="{{$post->id}}" username="{{auth()->user()->username}}" ></create-comment>
