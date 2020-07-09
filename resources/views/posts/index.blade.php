@@ -23,8 +23,9 @@
                     </div>
                     <div class="card-footer bg-white">
                         <div style="margin-top:-10px">
-                            <a href=""><span class="fa fa-heart" style="font-size:28px;"></span></a>
-                            <p>125 <span>likes</span></p>
+                            <like userid="{{auth()->user()->id}}" postid="{{$post->id}}"
+                                  likes="{{$post->likes->count()}}"></like>
+                            <p id="likes">{{$post->likes->count()}} <span>likes</span></p>
                         </div>
                         @if($post->caption)
                             <div class="d-flex align-items-baseline" style="margin-top: -10px">

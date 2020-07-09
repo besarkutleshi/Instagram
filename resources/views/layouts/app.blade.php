@@ -12,6 +12,16 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.get("demo_test.asp", function(data, status){
+                alert("Data: " + data + "\nStatus: " + status);
+            });
+            $("#heart").css("color", "#DADDE0");
+        })
+    </script>
+
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -39,15 +49,16 @@
 
                     </ul>
 
-
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <div class="mx-auto order-0">
                         <div style="">
                             <a class="btn btn-primary" data-toggle="modal" href="" data-target="#searchmodal">
                                 <span class="fa fa-search"></span>
                             </a>
                         </div>
+                    </div>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto align-items-center">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -59,7 +70,17 @@
                                 </li>
                             @endif
                         @else
+
                             <li class="nav-item dropdown">
+                                <a class="text-dark" href="{{ url('/') }}"><span style="font-size: 25px" class="fa fa-home pl-2 pr-2 mt-1"></span></a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="text-dark" href=""><span style="font-size: 25px" class="fas fa-user-friends pl-2 pr-2 mt-1"></span></a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="text-dark" href=""><span style="font-size: 25px" class="fa fa-heart pl-2 pr-2 mt-1"></span></a>
+                            </li>
+                            <li class="nav-item dropdown ml-4">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->username }} <span class="caret"></span>
                                 </a>

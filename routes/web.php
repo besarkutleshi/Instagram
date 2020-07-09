@@ -18,6 +18,7 @@ Auth::routes();
 
 Route::post('/c','CommentController@store');
 Route::post('following/{user}','FollowsController@store');
+Route::post('like','LikeController@store');
 Route::get('user/following/{user}','FollowingController@myfollowing');
 Route::get('user/followers/{user}','FollowingController@myfollowers');
 Route::get('/', 'PostController@index');
