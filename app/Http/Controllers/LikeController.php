@@ -41,4 +41,13 @@ class LikeController extends Controller
         $like = DB::table('likes')->where('user_id','=',$userid)
             ->where('post_id','=',$postid)->get();
     }
+
+    public function GetLikes($postid){
+        $likes = DB::table('likes')
+            ->join('users', 'users.id', '=', 'likes.user_id')
+            ->join('profiles', 'profiles.user_id', '=', 'users.id')
+            ->where('post_id','=',$postid)
+            ->get();
+        return $likes;
+    }
 }

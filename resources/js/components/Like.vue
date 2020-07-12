@@ -19,31 +19,26 @@
         data(){
             return{
                 status: this.likes,
-
             }
         },
         methods:{
           like(){
+              let like = document.getElementById('likeid' + this.postid);
+              let span = like.querySelector('span');
               axios.post('like',{
                   user_id : this.userid,
                   post_id : this.postid
               }).then(response =>{
                 if(response.data == "deleted"){
                     this.status--;
-                    let span = document.createElement('span');
-                    span.className="ml-1"
-                    span.textContent = "likes";
-                    document.getElementById('likes').textContent = this.status;
-                    document.getElementById('likes').appendChild(span);
-                    document.getElementById('heart').style.color = "#DADDE0";
+                    document.getElementById('likes' + this.postid).textContent = this.status;
+                    span.style.color = "#DADDE0";
+
+
                 }else{
                     this.status++;
-                    let span = document.createElement('span');
-                    span.className="ml-1"
-                    span.textContent = "likes";
-                    document.getElementById('likes').textContent = this.status;
-                    document.getElementById('likes').appendChild(span);
-                    document.getElementById('heart').style.color = "red";
+                    document.getElementById('likes' + this.postid ).textContent = this.status;
+                    span.style.color = "red";
                 }
             }).catch(errors =>{
 

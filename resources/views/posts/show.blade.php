@@ -5,6 +5,14 @@
         <div class="row">
             <div class="col-sm-6">
                 <img src="/storage/{{$post->image}}" alt="" class="img-fluid">
+                <div class="mt-1">
+                    <like id="likeid{{$post->id}}" userid="{{auth()->user()->id}}" postid="{{$post->id}}"
+                          likes="{{$post->likes->count()}}"></like>
+                    <div class="d-flex mt-1">
+                        <p id="likes{{$post->id}}">{{$post->likes->count()}}</p>
+                        <likes postid="{{$post->id}}" ></likes>
+                    </div>
+                </div>
             </div>
             <div class="col-sm-6">
                 <div class="d-flex mt-3">
@@ -29,24 +37,23 @@
                             </div>
                             <hr>
                         @endif
-                        <div id="card">
-                            @if($post->comments->count() != 0)
-                                @foreach($post->comments()->get() as $comment)
-                                    <div id="commentcard">
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{$comment->user->profile->profileimage()}}" class="rounded-circle"
-                                                 width="40" height="40" >
-                                            <a href="/profile/{{$comment->user->id}}" class="text-dark"><p class="mt-3 ml-2">{{$comment->user->username}}</p></a>
-                                            <p class="mt-3 ml-2">{{$comment->comment}}</p>
-                                            @if($comment->user->id == auth()->user()->id || $comment->post->user->id == auth()->user()->id)
-
-                                                <a class="ml-2" href="/c/delete/{{$comment->id}}"><span class="fa fa-trash"></span></a>
-                                            @endif
+                            <div id="{{$post->id}}">
+                                @if($post->comments->count() != 0)
+                                    @foreach($post->comments()->latest()->get() as $comment)
+                                        <div id="commentcard{{$post->id}}" class="card-body" style="margin-top: -30px">
+                                            <div class="d-flex align-items-center">
+                                                <img src="{{$comment->user->profile->profileimage()}}" class="rounded-circle"
+                                                     width="40" height="40" >
+                                                <a class="text-dark ml-2" href="/profile/{{$post->user->id}}">{{$comment->user->username}}</a>
+                                                <p class="mt-3 ml-2">{{$comment->comment}}</p>
+                                                @if($comment->user->id == auth()->user()->id || $comment->post->user->id == auth()->user()->id)
+                                                    <delete-comment commentid="{{$comment->id}}" postid="{{$post->id}}"></delete-comment>
+                                                @endif
+                                            </div>
                                         </div>
-                                    </div>
-                                @endforeach
-                            @endif
-                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
                     </div>
                     <div class="card-footer">
                         <create-comment exist="{{$post->comments->count()}}" userid="{{auth()->user()->id}}"
@@ -54,6 +61,29 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+
+        <div class="modal fade" id="likesmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Likes</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <div id="likescard" class="card" style="width: 350px">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

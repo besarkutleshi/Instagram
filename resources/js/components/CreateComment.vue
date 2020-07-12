@@ -25,14 +25,16 @@
         methods:{
             createcomment(){
                 let maindiv = document.createElement('div');
-                let card = document.getElementById('card');
+                let card = document.getElementById(this.postid);
+                var counter = 0;
                 if(this.exist == 0){
-                    console.log('u kriju');
+                    console.log('u kriju maindiv');
                     maindiv.className = "card-body";
                     maindiv.style.marginTop = "-30px";
+
                 }else{
                     console.log('u eee');
-                    maindiv = document.getElementById('commentcard');
+                    maindiv = document.getElementById('commentcard' + this.postid);
                 }
                 console.log('dul');
                 axios.post('/c',{
@@ -43,7 +45,8 @@
                     .then(response =>
                     {
 
-                       let firstdiv = document.createElement("div");
+                        let firstdiv = document.createElement("div");
+                        firstdiv.id = "firstdiv" + response.data.id;
                         firstdiv.className = "d-flex align-items-center";
 
                         let img = document.createElement("img");
@@ -64,12 +67,27 @@
                         p.textContent = this.comment;
                         p.className = "mt-3 ml-2";
 
-                        let a1 = document.createElement('a');
-                        a1.href = "/c/delete/" + response.data.id;
+                        let clear = document.createElement('button');
+                        clear.style.background = "none";
+                        clear.style.border = "0";
+                        clear.style.outline = "none";
+                        clear.className = "ml-2 mr-auto";
+                        clear.onclick = function(){
+                            axios.get('c/delete/' + response.data.id)
+                                .then(response =>{
+                                    console.log('ufshi');
+                                    firstdiv.remove();
+                                })
+                                .catch(errors =>{
+
+                                });
+                        };
+
 
                         let span = document.createElement('span');
                         span.className = "fa fa-trash ml-2";
-                        a1.appendChild(span);
+                        span.style.color = "red";
+                        clear.appendChild(span);
 
 
 
@@ -77,11 +95,11 @@
                         firstdiv.appendChild(img);
                         firstdiv.appendChild(a);
                         firstdiv.appendChild(p);
-                        firstdiv.appendChild(a1);
+                        firstdiv.appendChild(clear);
 
                         maindiv.appendChild(firstdiv);
                         card.appendChild(maindiv);
-                        document.getElementById('txtcomment').textContent = null;
+                        document.getElementById('txtcomment').value = '';
                     });
             }
         },

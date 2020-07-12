@@ -6,6 +6,7 @@ use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
 use App\Post;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
@@ -49,5 +50,13 @@ class PostController extends Controller
 
     public function show(\App\Post $post){
         return view('posts.show',compact('post'));
+    }
+
+    public function explore(){
+        $posts = DB::table('posts')
+            ->join('users', 'users.id', '=', 'posts.user_id')
+            ->where('posts.user_id','!=',auth()->user()->id)
+            ->select('*')->get();
+        return view('posts.explore',compact('posts'));
     }
 }
